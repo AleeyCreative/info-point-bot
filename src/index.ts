@@ -5,9 +5,10 @@ dotenv.config();
 import Client from "./Client";
 import * as registry from "./registry";
 
-const bot = new Telegraf("1846812149:AAHqIstra9oZ-LJn9KGVOXF3FS2JE3deFGQ");
+const token = process.env.BOT_TOKEN as string;
+const bot = new Telegraf(token);
 const client = new Client();
-function main(): void {
+function main() {
   //   Startup, messages and emojis
   bot.start(client.handleStart);
   bot.on(registry.sticker, client.handleSticker);

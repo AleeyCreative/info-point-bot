@@ -27,7 +27,8 @@ var dotenv = __importStar(require("dotenv"));
 dotenv.config();
 var Client_1 = __importDefault(require("./Client"));
 var registry = __importStar(require("./registry"));
-var bot = new telegraf_1.Telegraf("1846812149:AAHqIstra9oZ-LJn9KGVOXF3FS2JE3deFGQ");
+var token = process.env.BOT_TOKEN;
+var bot = new telegraf_1.Telegraf(token);
 var client = new Client_1.default();
 function main() {
     //   Startup, messages and emojis

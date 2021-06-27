@@ -1,14 +1,14 @@
 export default class MessageParser {
-  readonly searchRegex: RegExp;
-  readonly greetingRegex: RegExp;
-  readonly confusedRegex: RegExp;
+  readonly searchRegex: RegExp = /(?<=explain\s+).+/is;
+  readonly greetingRegex: RegExp = /[hello,hi,hey,what's up]/is;
+  readonly confusedRegex: RegExp = /[huh,idk]/is;
+
   constructor() {
     console.log("Initializing a new message parser");
-    this.searchRegex = /(?<=explain\s+).+/is;
-    this.greetingRegex = /[hello,hi,hey,what's up]/is;
-    this.confusedRegex = /[huh,idk]/is;
   }
-  //  isSearch(text:string): string | void {
-  //     if(this.searchRegex)
-  // }
+
+  parseSearchKey(text: string): string {
+    const searchKey = text.match(this.greetingRegex)[0];
+    return searchKey;
+  }
 }

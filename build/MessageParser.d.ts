@@ -3,4 +3,5 @@ export default class MessageParser {
     readonly greetingRegex: RegExp;
     readonly confusedRegex: RegExp;
     constructor();
+    parseSearchKey(text: string): string;
 }

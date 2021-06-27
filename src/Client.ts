@@ -1,4 +1,7 @@
 import { Context } from "telegraf";
+import MessageParser from "./MessageParser";
+
+const mp = new MessageParser();
 
 class Client {
   constructor() {
@@ -11,13 +14,22 @@ class Client {
     ctx.reply("Thanks for the sticker");
   }
   handleMessage(ctx: Context) {
-    // const message: string = ctx.message?.message_id || "";
-    console.log(ctx.message.text);
-    ctx.reply("Awwn! Thank you");
+    // Casting to any in order to access 'text' property
+    const msg: string = (<any>ctx).message.text;
+    console.log(msg);
+    let response: string;
+    if (mp.searchRegex.test(msg)) {
+      response = this.handleSearch(mp.parseSearchKey(msg));
+    }
+
+    ctx.reply(response);
   }
-  handleSearch(ctx: Context) {
-    console.log(ctx);
-    ctx.reply("Let me see, please wait...");
+  handleSearch(searchString: string): string {
+    return searchString;
+  }
+  buildRequestURL(searchString: string, options?: object): string {
+    const requestURL = `https:api.wikipedia.org/search?word=${searchString}`;
+    return requestURL;
   }
 }
 
