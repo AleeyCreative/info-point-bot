@@ -5,6 +5,6 @@ interface IOptions {
 declare class Agent {
     constructor();
     buildRequestURL(query: string, options: IOptions | null): string;
-    makeRequest(this: Agent, query: any): Promise<void>;
+    makeRequest(this: Agent, query: any): Promise<any>;
 }
 export default Agent;

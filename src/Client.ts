@@ -29,8 +29,10 @@ class Client {
     let response: string;
     if (mp.searchRegex.test(msg)) {
       const searchKey = mp.parseSearchKey(msg);
+      console.log(searchKey);
       const response = await agent.makeRequest(searchKey);
-      console.log(response);
+      ctx.replyWithMarkdown(response);
+      return;
     }
     ctx.reply("Searching... Please wait!");
   }

@@ -70,11 +70,12 @@ var Client = /** @class */ (function () {
                         console.log(msg);
                         if (!mp.searchRegex.test(msg)) return [3 /*break*/, 2];
                         searchKey = mp.parseSearchKey(msg);
+                        console.log(searchKey);
                         return [4 /*yield*/, agent.makeRequest(searchKey)];
                     case 1:
                         response_1 = _a.sent();
-                        console.log(response_1);
-                        _a.label = 2;
+                        ctx.replyWithMarkdown(response_1);
+                        return [2 /*return*/];
                     case 2:
                         ctx.reply("Searching... Please wait!");
                         return [2 /*return*/];

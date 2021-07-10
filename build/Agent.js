@@ -52,7 +52,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
 var qs_1 = __importDefault(require("qs"));
-var WIKIBASE_URL = "https://en.wikipedia.org/w/api.php?action=query&format=json";
+var WIKIBASE_URL = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search";
 var Agent = /** @class */ (function () {
     function Agent() {
         console.log("Created a new instance of Agent");
@@ -69,11 +69,12 @@ var Agent = /** @class */ (function () {
             reqOptions = options;
         }
         var params = qs_1.default.stringify(__assign({ srsearch: query }, reqOptions));
-        return WIKIBASE_URL + "params";
+        var requestURL = WIKIBASE_URL + "&" + params;
+        return requestURL;
     };
     Agent.prototype.makeRequest = function (query) {
         return __awaiter(this, void 0, void 0, function () {
-            var requestURL, response;
+            var requestURL, response, hits;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -82,7 +83,10 @@ var Agent = /** @class */ (function () {
                         return [4 /*yield*/, axios_1.default.get(requestURL)];
                     case 1:
                         response = _a.sent();
-                        console.log(response);
+                        hits = response.data.query.search;
+                        if (hits.length > 0) {
+                            return [2 /*return*/, hits[0].snippet];
+                        }
                         return [2 /*return*/];
                 }
             });
