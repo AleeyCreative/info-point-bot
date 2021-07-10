@@ -6,7 +6,9 @@
   "author": "Baba Ali <babaali196@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^10.0.0",
+    "qs": "^6.10.1",
     "telegraf": "^4.3.0",
     "typescript": "^4.3.4"
   },
