@@ -84,10 +84,7 @@ var Agent = /** @class */ (function () {
                     case 1:
                         response = _a.sent();
                         hits = response.data.query.search;
-                        if (hits.length > 0) {
-                            return [2 /*return*/, hits[0].snippet];
-                        }
-                        return [2 /*return*/];
+                        return [2 /*return*/, hits];
                 }
             });
         });

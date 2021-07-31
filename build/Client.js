@@ -41,19 +41,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var MessageParser_1 = __importDefault(require("./MessageParser"));
 var Agent_1 = __importDefault(require("./Agent"));
+var ResponseBuilder_1 = __importDefault(require("./ResponseBuilder"));
 var agent = new Agent_1.default();
 var mp = new MessageParser_1.default();
+var respBuilder = new ResponseBuilder_1.default();
 var Client = /** @class */ (function () {
     function Client() {
         console.log("Initialized a new client");
     }
-    Client.prototype.handleSearch = function (searchString) {
-        return searchString;
-    };
-    Client.prototype.buildRequestURL = function (searchString, options) {
-        var requestURL = "https:api.wikipedia.org/search?word=" + searchString;
-        return requestURL;
-    };
     Client.prototype.handleStart = function (ctx) {
         ctx.reply("Starting application...");
     };
@@ -62,22 +57,31 @@ var Client = /** @class */ (function () {
     };
     Client.prototype.handleMessage = function (ctx) {
         return __awaiter(this, void 0, void 0, function () {
-            var msg, response, searchKey, response_1;
+            var msg, defaultResponse, response, searchKey, hits;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         msg = ctx.update.message.text;
                         console.log(msg);
+                        defaultResponse = "I'm not sure I quite understand the message, sorry!";
                         if (!mp.searchRegex.test(msg)) return [3 /*break*/, 2];
                         searchKey = mp.parseSearchKey(msg);
-                        console.log(searchKey);
                         return [4 /*yield*/, agent.makeRequest(searchKey)];
                     case 1:
-                        response_1 = _a.sent();
-                        ctx.replyWithMarkdown(response_1);
-                        return [2 /*return*/];
+                        hits = _a.sent();
+                        console.log(hits);
+                        if (hits.length > 1) {
+                            ctx.session.options = generateOptions(hits);
+                            response = respBuilder.formatHits(hits);
+                        }
+                        else {
+                            console.log("nothing yet");
+                            // response = respBuilder.formatHit(hits[0]);
+                        }
+                        ctx.replyWithMarkdown(response);
+                        _a.label = 2;
                     case 2:
-                        ctx.reply("Searching... Please wait!");
+                        ctx.reply(defaultResponse);
                         return [2 /*return*/];
                 }
             });
@@ -85,4 +89,11 @@ var Client = /** @class */ (function () {
     };
     return Client;
 }());
+function generateOptions(hits) {
+    var options = [];
+    hits.forEach(function (hit, index) {
+        options[index] = hit.snippet;
+    });
+    return options;
+}
 exports.default = Client;

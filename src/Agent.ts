@@ -33,10 +33,9 @@ class Agent {
     console.log(`This is the search query: ${query}`);
     const requestURL = this.buildRequestURL(query, null);
     const response = await axios.get(requestURL);
+
     const hits = response.data.query.search;
-    if (hits.length > 0) {
-      return hits[0].snippet;
-    }
+    return hits;
   }
 }
 

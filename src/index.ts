@@ -1,4 +1,4 @@
-import { Telegraf } from "telegraf";
+import { Telegraf, session } from "telegraf";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -9,6 +9,8 @@ const token = process.env.BOT_TOKEN as string;
 const bot = new Telegraf(token);
 const client = new Client();
 function main() {
+  // configure middlewares
+  bot.use(session());
   //   Startup, messages and emojis
   bot.start(client.handleStart);
   bot.on(registry.sticker, client.handleSticker);

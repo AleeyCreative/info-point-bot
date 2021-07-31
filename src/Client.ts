@@ -1,41 +1,55 @@
 import { Context } from "telegraf";
 import MessageParser from "./MessageParser";
 import Agent from "./Agent";
+import ResponseBuilder from "./ResponseBuilder";
 
 const agent = new Agent();
 const mp = new MessageParser();
+const respBuilder = new ResponseBuilder();
 
 class Client {
   constructor() {
     console.log("Initialized a new client");
   }
-  handleSearch(searchString: string): string {
-    return searchString;
-  }
-  buildRequestURL(searchString: string, options?: object): string {
-    const requestURL = `https:api.wikipedia.org/search?word=${searchString}`;
-    return requestURL;
-  }
+
   handleStart(ctx: Context) {
     ctx.reply("Starting application...");
   }
   handleSticker(ctx: Context) {
     ctx.reply("Thanks for the sticker");
   }
+
   async handleMessage(this: Client, ctx: Context) {
-    // Casting to any in order to access 'text' property
+    // Casting to 'any' in order to access 'text' property
     const msg: string = (<any>ctx).update.message.text;
     console.log(msg);
-    let response: string;
+    const defaultResponse: string =
+      "I'm not sure I quite understand the message, sorry!";
+    let response: any;
     if (mp.searchRegex.test(msg)) {
+      // Not currently using class-own methods
       const searchKey = mp.parseSearchKey(msg);
-      console.log(searchKey);
-      const response = await agent.makeRequest(searchKey);
+      const hits = await agent.makeRequest(searchKey);
+      console.log(hits);
+      if (hits.length > 1) {
+        ctx.session.options = generateOptions(hits);
+        response = respBuilder.formatHits(hits);
+      } else {
+        console.log("nothing yet");
+        // response = respBuilder.formatHit(hits[0]);
+      }
       ctx.replyWithMarkdown(response);
-      return;
     }
-    ctx.reply("Searching... Please wait!");
+    ctx.reply(defaultResponse);
   }
+}
+
+function generateOptions(hits): Array<string> {
+  let options = [];
+  hits.forEach((hit, index) => {
+    options[index] = hit.snippet;
+  });
+  return options;
 }
 
 export default Client;

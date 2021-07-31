@@ -31,6 +31,8 @@ var token = process.env.BOT_TOKEN;
 var bot = new telegraf_1.Telegraf(token);
 var client = new Client_1.default();
 function main() {
+    // configure middlewares
+    bot.use(telegraf_1.session());
     //   Startup, messages and emojis
     bot.start(client.handleStart);
     bot.on(registry.sticker, client.handleSticker);
