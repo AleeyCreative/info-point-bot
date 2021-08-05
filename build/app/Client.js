@@ -35,24 +35,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stickerController = exports.searchController = exports.startController = void 0;
-function startController(ctx) {
-    var message = "\n    Welcome to info-bot. A bot that helps you find information quickly\n    ";
-    ctx.reply(message);
-}
-exports.startController = startController;
-function searchController(ctx) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            console.log(ctx);
-            return [2 /*return*/];
+var MessageService_1 = __importDefault(require("../services/MessageService"));
+var WikiService_1 = __importDefault(require("../services/WikiService"));
+var wikiService = new WikiService_1.default();
+var msgService = new MessageService_1.default();
+// const responseService = new ResponseBuilder();
+var Client = /** @class */ (function () {
+    function Client() {
+        this.defaultResponse = "I am not sure I quite understand that, sorry";
+        console.log("Initialized a new client");
+    }
+    Client.prototype.handleStart = function (ctx) {
+        ctx.reply("Starting application...");
+    };
+    Client.prototype.handleSticker = function (ctx) {
+        ctx.reply("Thanks for the sticker");
+    };
+    Client.prototype.handleMessage = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var msg, response, query;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        msg = ctx.update.message.text;
+                        console.log(msg);
+                        if (!msgService.isQuestion(msg)) return [3 /*break*/, 2];
+                        query = msgService.parseQuestion(msg);
+                        return [4 /*yield*/, this.searchWiki(query, ctx)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                    case 2:
+                        ctx.reply(this.defaultResponse);
+                        return [2 /*return*/];
+                }
+            });
         });
-    });
-}
-exports.searchController = searchController;
-function stickerController(ctx) {
-    var message = "Thanks for the sticker";
-    ctx.reply(message);
-}
-exports.stickerController = stickerController;
+    };
+    Client.prototype.searchWiki = function (query, ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var hits;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, wikiService.search(query)];
+                    case 1:
+                        hits = _a.sent();
+                        console.log(hits);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return Client;
+}());
+exports.default = Client;

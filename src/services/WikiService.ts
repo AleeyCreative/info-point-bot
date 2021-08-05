@@ -1,7 +1,5 @@
-import { Context } from "telegraf";
 import axios from "axios";
 import qs from "qs";
-import { request } from "http";
 
 interface IOptions {
   srwhat?: string;
@@ -11,10 +9,11 @@ interface IOptions {
 const WIKIBASE_URL =
   "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search";
 
-class Agent {
+export default class WikiService {
   constructor() {
     console.log("Created a new instance of Agent");
   }
+
   buildRequestURL(query: string, options: IOptions | null): string {
     let reqOptions;
     if (!options) {
@@ -29,14 +28,12 @@ class Agent {
     const requestURL = `${WIKIBASE_URL}&${params}`;
     return requestURL;
   }
-  async makeRequest(this: Agent, query) {
+
+  async search(this: WikiService, query) {
     console.log(`This is the search query: ${query}`);
     const requestURL = this.buildRequestURL(query, null);
     const response = await axios.get(requestURL);
-
     const hits = response.data.query.search;
     return hits;
   }
 }
-
-export default Agent;

@@ -2,9 +2,9 @@ interface IOptions {
     srwhat?: string;
     srlimit?: number;
 }
-declare class Agent {
+export default class WikiService {
     constructor();
     buildRequestURL(query: string, options: IOptions | null): string;
-    makeRequest(this: Agent, query: any): Promise<any>;
+    search(this: WikiService, query: any): Promise<any>;
 }
-export default Agent;
+export {};

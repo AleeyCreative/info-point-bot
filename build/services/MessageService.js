@@ -7,8 +7,11 @@ var MessageParser = /** @class */ (function () {
         this.confusedRegex = /[huh,idk]/i;
         console.log("Initializing a new message parser");
     }
-    MessageParser.prototype.parseSearchKey = function (text) {
-        var matchArray = text.match(this.searchRegex);
+    MessageParser.prototype.isQuestion = function (text) {
+        return this.searchRegex.test(text);
+    };
+    MessageParser.prototype.parseQuestion = function (msg) {
+        var matchArray = msg.match(this.searchRegex);
         console.log(matchArray);
         return matchArray[0];
     };

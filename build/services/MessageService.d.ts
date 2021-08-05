@@ -3,5 +3,6 @@ export default class MessageParser {
     readonly greetingRegex: RegExp;
     readonly confusedRegex: RegExp;
     constructor();
-    parseSearchKey(this: MessageParser, text: string): string;
+    isQuestion(text: any): boolean;
+    parseQuestion(msg: string): string;
 }

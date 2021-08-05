@@ -7,8 +7,12 @@ export default class MessageParser {
     console.log("Initializing a new message parser");
   }
 
-  parseSearchKey(this: MessageParser, text: string): string {
-    const matchArray = text.match(this.searchRegex);
+  isQuestion(text): boolean {
+    return this.searchRegex.test(text);
+  }
+
+  parseQuestion(msg: string): string {
+    const matchArray = msg.match(this.searchRegex);
     console.log(matchArray);
     return matchArray[0];
   }

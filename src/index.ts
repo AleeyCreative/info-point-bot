@@ -2,8 +2,8 @@ import { Telegraf, session } from "telegraf";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import Client from "./Client";
-import * as registry from "./registry";
+import Client from "./app/Client";
+import * as registry from "./utilities/registry";
 
 const token = process.env.BOT_TOKEN as string;
 const bot = new Telegraf(token);

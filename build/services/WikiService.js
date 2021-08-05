@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,61 +50,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var MessageParser_1 = __importDefault(require("./MessageParser"));
-var Agent_1 = __importDefault(require("./Agent"));
-var ResponseBuilder_1 = __importDefault(require("./ResponseBuilder"));
-var agent = new Agent_1.default();
-var mp = new MessageParser_1.default();
-var respBuilder = new ResponseBuilder_1.default();
-var Client = /** @class */ (function () {
-    function Client() {
-        console.log("Initialized a new client");
+var axios_1 = __importDefault(require("axios"));
+var qs_1 = __importDefault(require("qs"));
+var WIKIBASE_URL = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search";
+var WikiService = /** @class */ (function () {
+    function WikiService() {
+        console.log("Created a new instance of Agent");
     }
-    Client.prototype.handleStart = function (ctx) {
-        ctx.reply("Starting application...");
+    WikiService.prototype.buildRequestURL = function (query, options) {
+        var reqOptions;
+        if (!options) {
+            reqOptions = {
+                srwhat: "text",
+                srlimit: 5,
+            };
+        }
+        else {
+            reqOptions = options;
+        }
+        var params = qs_1.default.stringify(__assign({ srsearch: query }, reqOptions));
+        var requestURL = WIKIBASE_URL + "&" + params;
+        return requestURL;
     };
-    Client.prototype.handleSticker = function (ctx) {
-        ctx.reply("Thanks for the sticker");
-    };
-    Client.prototype.handleMessage = function (ctx) {
+    WikiService.prototype.search = function (query) {
         return __awaiter(this, void 0, void 0, function () {
-            var msg, defaultResponse, response, searchKey, hits;
+            var requestURL, response, hits;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        msg = ctx.update.message.text;
-                        console.log(msg);
-                        defaultResponse = "I'm not sure I quite understand the message, sorry!";
-                        if (!mp.searchRegex.test(msg)) return [3 /*break*/, 2];
-                        searchKey = mp.parseSearchKey(msg);
-                        return [4 /*yield*/, agent.makeRequest(searchKey)];
+                        console.log("This is the search query: " + query);
+                        requestURL = this.buildRequestURL(query, null);
+                        return [4 /*yield*/, axios_1.default.get(requestURL)];
                     case 1:
-                        hits = _a.sent();
-                        console.log(hits);
-                        if (hits.length > 1) {
-                            ctx.session.options = generateOptions(hits);
-                            response = respBuilder.formatHits(hits);
-                        }
-                        else {
-                            console.log("nothing yet");
-                            // response = respBuilder.formatHit(hits[0]);
-                        }
-                        ctx.replyWithMarkdown(response);
-                        _a.label = 2;
-                    case 2:
-                        ctx.reply(defaultResponse);
-                        return [2 /*return*/];
+                        response = _a.sent();
+                        hits = response.data.query.search;
+                        return [2 /*return*/, hits];
                 }
             });
         });
     };
-    return Client;
+    return WikiService;
 }());
-function generateOptions(hits) {
-    var options = [];
-    hits.forEach(function (hit, index) {
-        options[index] = hit.snippet;
-    });
-    return options;
-}
-exports.default = Client;
+exports.default = WikiService;
