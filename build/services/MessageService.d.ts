@@ -1,9 +1,9 @@
 import { IWikiResponse } from "interfaces";
 export default class MessageParser {
-    readonly searchRegex: RegExp;
-    readonly greetingRegex: RegExp;
-    readonly confusedRegex: RegExp;
-    readonly defaultResponse = "I'm not quite sure I understand what you mean, sorry!";
+    private searchRegex;
+    private greetingRegex;
+    private confusedRegex;
+    private defaultResponse;
     constructor();
     isQuestion(text: any): boolean;
     parseQuestion(msg: string): string;
