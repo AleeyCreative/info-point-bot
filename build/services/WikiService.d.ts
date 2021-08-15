@@ -1,10 +1,6 @@
-interface IOptions {
-    srwhat?: string;
-    srlimit?: number;
-}
+import { IWikiResponse } from "../interfaces";
 export default class WikiService {
     constructor();
-    buildRequestURL(query: string, options: IOptions | null): string;
-    search(this: WikiService, query: any): Promise<any>;
+    search: (query: any) => Promise<IWikiResponse | null>;
+    transformResponse: (response: any) => IWikiResponse;
 }
-export {};

@@ -1,8 +1,12 @@
-export default class MessageParser {
-  readonly searchRegex: RegExp = /(?<=explain\s+).+/i;
-  readonly greetingRegex: RegExp = /[hello,hi,hey,what's up]/i;
-  readonly confusedRegex: RegExp = /[huh,idk]/i;
+import { capitalize } from "lodash";
+import { IWikiResponse } from "interfaces";
 
+export default class MessageParser {
+  private searchRegex: RegExp = /(?<=explain\s+).+/i;
+  private greetingRegex: RegExp = /[hello,hi,hey,what's up]/i;
+  private confusedRegex: RegExp = /[huh,idk]/i;
+  private defaultResponse =
+    "I'm not quite sure I understand what you mean, sorry!";
   constructor() {
     console.log("Initializing a new message parser");
   }
@@ -13,7 +17,17 @@ export default class MessageParser {
 
   parseQuestion(msg: string): string {
     const matchArray = msg.match(this.searchRegex);
-    console.log(matchArray);
-    return matchArray[0];
+    return matchArray ? matchArray[0] : "";
   }
+
+  buildSearchResponse = (resData: IWikiResponse): string => {
+    const footMessage = `Enter 1 for disambugation(${resData.title})`;
+    return `
+    ## ${capitalize(resData.title)}
+    ${resData.extract}
+    
+    ----------------------------
+    **${footMessage}**
+    `;
+  };
 }

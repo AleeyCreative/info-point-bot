@@ -1,0 +1,18 @@
+name: generateLicenseFile
+on: push
+jobs:
+  generate-license-file
+  runs-on: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v2
+    - name: Setting up Nodejs
+      uses: actions/setup-node@v1
+    - name: Generating License
+      id: gen-license
+      run: |
+        yarn install generate-license-file
+        yarn generate-license-file ${{steps.gen-license.outputs.source}} ${{steps.generating-licnse.outputs.destn}}
+      with:
+       source: package.json
+       destn: 3rd-party-license-file.txt

@@ -1,0 +1,7 @@
+api/rest_v1/page/summary/{title}
+	thumbnail.source
+	originalimage.source
+	description
+	pageid
+	content_urls.desktop.page
+	extract

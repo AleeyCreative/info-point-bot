@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -51,44 +40,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
-var qs_1 = __importDefault(require("qs"));
-var WIKIBASE_URL = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search";
+var WIKIBASE_URL = "https://en.wikipedia.org/api/rest_v1/page/summary/";
+var api = axios_1.default.create({ baseURL: WIKIBASE_URL });
 var WikiService = /** @class */ (function () {
     function WikiService() {
-        console.log("Created a new instance of Agent");
-    }
-    WikiService.prototype.buildRequestURL = function (query, options) {
-        var reqOptions;
-        if (!options) {
-            reqOptions = {
-                srwhat: "text",
-                srlimit: 5,
-            };
-        }
-        else {
-            reqOptions = options;
-        }
-        var params = qs_1.default.stringify(__assign({ srsearch: query }, reqOptions));
-        var requestURL = WIKIBASE_URL + "&" + params;
-        return requestURL;
-    };
-    WikiService.prototype.search = function (query) {
-        return __awaiter(this, void 0, void 0, function () {
-            var requestURL, response, hits;
+        var _this = this;
+        this.search = function (query) { return __awaiter(_this, void 0, void 0, function () {
+            var response, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("This is the search query: " + query);
-                        requestURL = this.buildRequestURL(query, null);
-                        return [4 /*yield*/, axios_1.default.get(requestURL)];
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, api.get(query)];
                     case 1:
                         response = _a.sent();
-                        hits = response.data.query.search;
-                        return [2 /*return*/, hits];
+                        return [2 /*return*/, this.transformResponse(response)];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.log(err_1);
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
                 }
             });
-        });
-    };
+        }); };
+        this.transformResponse = function (response) {
+            return {
+                thumbnailUrl: response.data.thumbnail.source,
+                originalImageUrl: response.data.originalimage.source,
+                description: response.data.description,
+                pageId: response.data.pageid,
+                desktopUrl: response.data.content_urls.desktop.page,
+                title: response.data.titles.display,
+                mobileUrl: response.data.content_urls.mobile.page,
+                extract: response.data.extract,
+                lang: response.data.lang,
+                timestamp: response.data.timestamp,
+            };
+        };
+        console.log("Created a new instance of Agent");
+    }
     return WikiService;
 }());
 exports.default = WikiService;
