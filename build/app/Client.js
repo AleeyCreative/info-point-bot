@@ -63,7 +63,7 @@ var Client = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/];
                     case 2:
-                        ctx.reply(msgService.defaultResponse);
+                        ctx.reply("Sorry, did not understand that !");
                         return [2 /*return*/];
                 }
             });

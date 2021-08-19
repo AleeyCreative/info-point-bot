@@ -32,7 +32,7 @@ class Client {
       await this.searchWiki(ctx, query);
       return;
     }
-    ctx.reply(msgService.defaultResponse);
+    ctx.reply("Sorry, did not understand that !");
   };
 
   searchWiki = async (ctx: IContext, query: string) => {
