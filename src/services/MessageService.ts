@@ -2,10 +2,10 @@ import { capitalize } from "lodash";
 import { IWikiResponse } from "interfaces";
 
 export default class MessageParser {
-  private searchRegex: RegExp = /(?<=explain\s+).+/i;
-  private greetingRegex: RegExp = /[hello,hi,hey,what's up]/i;
-  private confusedRegex: RegExp = /[huh,idk]/i;
-  private defaultResponse =
+  readonly searchRegex: RegExp = /(?<=explain\s+).+/i;
+  readonly greetingRegex: RegExp = /[hello,hi,hey,what's up]/i;
+  readonly confusedRegex: RegExp = /[huh,idk]/i;
+  readonly defaultResponse =
     "I'm not quite sure I understand what you mean, sorry!";
   constructor() {
     console.log("Initializing a new message parser");
