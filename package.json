@@ -23,6 +23,7 @@
   },
   "scripts": {
     "start:dev": "nodemon --watch 'src' --ext '.ts,.js' --ignore 'nodemon' --exec 'tsc && node build/index.js'",
+    "start:staging": "tsc && pm2 start build/index.js",
     "build": "rimraf ./build && npx tsc",
     "start": "yarn build && node ./build/index.js",
     "start:prod": "pm2 start"
