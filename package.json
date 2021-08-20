@@ -26,6 +26,6 @@
     "start:staging": "tsc && pm2 start build/index.js",
     "build": "rimraf ./build && npx tsc",
     "start": "yarn build && node ./build/index.js",
-    "start:prod": "pm2 start"
+    "start:prod": "pm2 start build/index.js"
   }
 }

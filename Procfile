@@ -1,1 +1,1 @@
-web: pm2 start:dev
+web: yarn start:staging
