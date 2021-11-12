@@ -19,7 +19,12 @@ function main() {
 
   // Launching bot
   console.log("Starting bot");
-  bot.launch();
+  bot.launch({
+    webhook: {
+      domain: "https://info-point-bot.herokuapp.com",
+      port: 4000,
+    },
+  });
 }
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
