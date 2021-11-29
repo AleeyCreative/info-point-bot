@@ -13,7 +13,7 @@ class ResponseBuilder {
       `;
   }
   formatHits(this: ResponseBuilder, hits): string {
-    const title = "Results from wikipedia";
+    const title = "Results from Wikipedia";
     const hint = "Selecting any of the option and I fetch the result for you";
     let body = "";
     hits.forEach((hit, index) => {
