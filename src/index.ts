@@ -21,7 +21,7 @@ function main() {
   console.log("Starting bot");
   bot.launch({
     webhook: {
-      domain: "https://info-point-bot.herokuapp.com",
+      domain: "https://info-bot-98.herokuapp.com",
       port: 4000,
     },
   });
