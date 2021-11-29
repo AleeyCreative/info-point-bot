@@ -1,33 +1,11 @@
-import { Telegraf, session } from "telegraf";
-import * as dotenv from "dotenv";
-dotenv.config();
+import express from "express";
+import setupBot from "./setupBot";
 
-import Client from "./app/Client";
-import * as registry from "./utilities/registry";
+const welcomeMarkup = `<h2> <center> Welcome to info-point-bot, telegram link is <a href="https://t.me/info_point_bot">t.me/info_point_bot</a></center></h2>`;
 
-const token = process.env.BOT_TOKEN as string;
-const bot = new Telegraf(token);
-const client = new Client();
-function main() {
-  // configure middlewares
-  bot.use(session());
-  //   Startup, messages and emojis
-  bot.start(client.handleStart);
-  bot.on(registry.sticker, client.handleSticker);
-  bot.on(registry.message, client.handleMessage);
-  // Commands
+setupBot();
+const app = express();
+app.get("/", (_, res) => res.send(welcomeMarkup));
 
-  // Launching bot
-  console.log("Starting bot");
-  bot.launch({
-    webhook: {
-      domain: "https://info-bot-98.herokuapp.com",
-      port: 4000,
-    },
-  });
-}
-
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
-
-main();
+const port = process.env.PORT || 4000;
+app.listen(port, () => console.log("express server running successfully"));
