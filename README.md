@@ -6,4 +6,4 @@ Info-point-bot is a fun Telegram bot built with Typescript to help you find info
 
 Still in the works
 
-[One-click Cloud Editor Launch](https://purple-mammal-2zlltmqv.ws-eu17.gitpod.io/)
+[One-click Cloud Editor Launch](https://plum-bug-fcwtzgyi.ws-eu23.gitpod.io/)
