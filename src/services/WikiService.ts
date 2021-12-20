@@ -18,6 +18,7 @@ export default class WikiService {
   search = async (query): Promise<IWikiResponse | null> => {
     try {
       const response = await api.get(query);
+      console.log(response, "response");
       return this.transformResponse(response);
     } catch (err) {
       console.log(err);
@@ -26,8 +27,8 @@ export default class WikiService {
   };
   transformResponse = (response): IWikiResponse => {
     return {
-      thumbnailUrl: response.data.thumbnail.source,
-      originalImageUrl: response.data.originalimage.source,
+      thumbnailUrl: response.data.thumbnail?.source,
+      originalImageUrl: response.data.originalimage?.source,
       description: response.data.description,
       pageId: response.data.pageid,
       desktopUrl: response.data.content_urls.desktop.page,

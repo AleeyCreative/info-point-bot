@@ -4,8 +4,8 @@ export interface IWikiList {
 }
 
 export interface IWikiResponse {
-  thumbnailUrl: string;
-  originalImageUrl: string;
+  thumbnailUrl?: string;
+  originalImageUrl?: string;
   description: string;
   pageId: string;
   desktopUrl: string;

@@ -22,8 +22,7 @@ export default class MessageParser {
 
   buildSearchResponse = (resData: IWikiResponse): string => {
     const footMessage = `Enter 1 for disambugation(${resData.title})`;
-    return `
-    ## ${capitalize(resData.title)}
+    return `## ${capitalize(resData.title)}
     ${resData.extract}
     
     ----------------------------
