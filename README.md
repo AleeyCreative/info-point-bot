@@ -25,7 +25,8 @@ yarn start
 
 ## Usage
 
-Info-point-bot's handle is [t.me/info_point_bot](t.me/info_point_bot)
+Info-point-bot's handle is [t.me/info_point_bot](t.me/info_point_bot).
+Asking a question with "explain" prefix would prompt info-point-bot to fetch the query from Wikipedia and send the result back to the user
 
 ## Contributing
 
