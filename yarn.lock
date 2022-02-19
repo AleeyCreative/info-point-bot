@@ -1098,10 +1098,10 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-infobox-parser@3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/infobox-parser/-/infobox-parser-3.6.1.tgz#841aeae194b3248d575b1ff268fb520d19839f1c"
-  integrity sha512-y/Z3iI0V4ZBjK/Un21K/a2h2iA2UItETd14shEdj6ZajrRHmysTVVmfxn0z2LsXs4Pb9byxIMb+rA+6luB3kyw==
+infobox-parser@3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/infobox-parser/-/infobox-parser-3.6.2.tgz#e2b2701fd6a6274fad49869ee1a0bad56930f1e7"
+  integrity sha512-lasdwvbtjCtDDO6mArAs/ueFEnBJRyo2UbZPAkd5rEG5NVJ3XFCOvbMwNTT/rJlFv1+ORw8D3UvZV4brpgATCg==
   dependencies:
     camelcase "^4.1.0"
 
@@ -2264,14 +2264,14 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-wikijs@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/wikijs/-/wikijs-6.3.0.tgz#60739abd7c6de8b8f1fc336097bd24c9adbbbf8c"
-  integrity sha512-E5AXmL/PsbdBT5OwvMfvu4tGBdV4QAMipOukzgEvXFgUVUAPF6s0Z9AIbtojqGCxV/UDLXtzSwoSmD9Y1F1TlQ==
+wikijs@^6.3.3:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/wikijs/-/wikijs-6.3.3.tgz#79d47346a9ebb280470fc0caf0b73f344327abcc"
+  integrity sha512-pYVaUuJyTd7VO2aNxbdN341zgio+QuGdc6HC3jyQqakyaLJdOD8Shj+bs7lnZnhv/wml2u+C+OME9YUkck06Cg==
   dependencies:
     cross-fetch "^3.0.2"
     hyntax "^1.1.9"
-    infobox-parser "3.6.1"
+    infobox-parser "3.6.2"
 
 word-wrap@~1.2.3:
   version "1.2.3"
