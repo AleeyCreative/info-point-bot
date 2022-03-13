@@ -27,7 +27,7 @@ export default class MessageParser {
     ${resData.extract}
     
     ----------------------------
-    **${footMessage}**
+    **${footMessage}**n
     `;
   };
 }

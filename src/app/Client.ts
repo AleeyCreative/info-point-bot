@@ -41,7 +41,7 @@ class Client {
       const searchResponse: string = msgService.buildSearchResponse(response);
       const ctxData = ctxService.ctxForSearch(response);
       // ctx.session.title = ctxData;
-      ctx.replyWithMarkdown(searchResponse);
+      ctx.reply(searchResponse, { parse_mode: "MarkdownV2" });
     }
   };
 }
