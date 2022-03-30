@@ -6,7 +6,7 @@ const welcomeMarkup = `<h2> <center> Welcome to info-point-bot, telegram link is
 const app = express();
 app.get("/", (_, res) => res.send(welcomeMarkup));
 
-const port = process.env.PORT || 6200;
+const port = process.env.PORT || 6400;
 app.listen(port, () => {
   console.log("express server running successfully");
   setupBot();

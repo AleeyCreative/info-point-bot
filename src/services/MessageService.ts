@@ -23,7 +23,7 @@ export default class MessageParser {
 
   buildSearchResponse = (resData: IWikiResponse): string => {
     const footMessage = `**Sourced from Wikipedia under [CC-BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/)**`;
-    return `<h2> ${capitalize(resData.title)} </h2>
+    return `## ${capitalize(resData.title)} 
     ${resData.extract}
     
     ----------------------------
