@@ -19,10 +19,12 @@ export default class WikiService {
     try {
       const response = await api.get(query);
       console.log(response, "response");
+      if (this.isList(response)) return transformList(response);
       return this.transformResponse(response);
     } catch (err) {
       console.log(err);
-      return null;
+      if (err.status == 404) return NOT_FOUND_ERROR;
+      return GENERIC_ERROR;
     }
   };
   transformResponse = (response): IWikiResponse => {
